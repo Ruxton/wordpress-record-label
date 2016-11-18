@@ -1,0 +1,72 @@
+table tbody#record_label_tracklist_prepend {
+    counter-reset: rowNumber;
+}
+
+table tbody#record_label_tracklist_prepend tr {
+    counter-increment: rowNumber;
+}
+
+table tbody#record_label_tracklist_prepend tr td:first-child::before {
+    content: counter(rowNumber);
+}
+
+.meta_inner > label:first-of-type {
+  padding: 0px 10px 10px 0;
+}
+
+.meta_inner label {
+  display: block;
+  font-weight: bold;
+  line-height: 1.3em;
+  padding: 25px 10px 10px 0;
+}
+
+.meta_inner input[type=checkbox] + label, .meta_inner input[type=radio] + label {
+  display: inline-block;
+  font-weight: normal;
+  line-height: normal;
+  padding: 0;
+}
+
+.meta_inner input[type=radio] {
+  margin: 0.25em 0;
+}
+
+.meta_inner input[type=radio] + label {
+  margin-left: 0.5em;
+}
+
+.meta_inner .record_label_release_format input[type=checkbox] {
+  margin: 0.5em 0;
+}
+
+.meta_inner .record_label_release_format input[type=checkbox] + label {
+  margin-left: 0.5em;
+  font-style: italic;
+}
+
+.record_label_release_format_identifiers label {
+  font-weight: normal;
+  padding: 0;
+}
+
+.record_label_release_format_identifiers {
+    font-size: 0.8em;
+}
+
+.record_label_release_format_identifiers label {
+  margin: 5px;
+}
+
+.meta_inner .record_label_release_format input[type=checkbox] + label + .record_label_release_format_identifiers {
+  display: none;
+  margin-bottom: 10px;
+}
+
+.meta_inner .record_label_release_format input[type=checkbox]:checked + label + .record_label_release_format_identifiers {
+  display: block;;
+}
+
+.meta_inner .record_label_release_format {
+  display: block;
+}
