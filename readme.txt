@@ -3,8 +3,8 @@ Contributors: ruxton
 Donate link: https://ignite.digitalignition.net/
 Tags: record label
 Requires at least: 4.3.1
-Tested up to: 4.5.3
-Stable tag: 0.2.5
+Tested up to: 4.7.2
+Stable tag: 0.2.6
 
 Adds an artist post type, a release post type and genre tags.
 
