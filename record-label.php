@@ -80,6 +80,7 @@ if(!class_exists('RecordLabel_Plugin'))
       add_action('add_meta_boxes', array($this,'register_meta_boxes' ));
       add_action( 'admin_print_scripts-post-new.php', array($this,'add_meta_box_js'), 11 );
       add_action( 'admin_print_scripts-post.php', array($this,'add_meta_box_js'), 11 );
+      add_filter( 'get_user_option_metaboxhidden_nav-menus', array($this,'always_visible_post_types'), 10, 3 );
       add_action('save_post', array($this,'save_custom_meta'), 10, 3 );
       add_action('widgets_init', array($this,'register_widgets'));
       add_action( 'edit_form_after_title', array( $this, 'add_subtitle_field' ) );
@@ -99,6 +100,16 @@ if(!class_exists('RecordLabel_Plugin'))
         }
         return $titleArr;
       },10,2);
+    }
+
+    function always_visible_post_types( $result, $option, $user )
+    {
+        $show_custom_posts = array("add-post-type-release","add-post-type-artist");
+        if(!in_array($show_custom_posts, $result)) {
+          $result = array_diff( $result, $show_custom_posts );
+        }
+
+        return $result;
     }
 
     function locate_template( $template_names, $load = false, $require_once = true ) {
@@ -264,7 +275,7 @@ if(!class_exists('RecordLabel_Plugin'))
 
       add_action( 'admin_enqueue_scripts', array( $this, 'load_custom_wp_admin_style') );
     }
-
+    
     function set_release_columns($columns) {
       return array(
           'cb' => '<input type="checkbox" />',
@@ -337,7 +348,9 @@ if(!class_exists('RecordLabel_Plugin'))
       }
 
       // Arrange purchase links
+      $oldlinks = $this->get_release_links();
       $links = array();
+
       if(isset($_REQUEST['record_label_link'])) {
         $posted_links = $_REQUEST['record_label_link'];
         if (isset($posted_links["REPLACEID"])) {
@@ -409,7 +422,9 @@ if(!class_exists('RecordLabel_Plugin'))
       }
 
       // Save purchase links
-      update_post_meta($post_id, 'record_label_links', serialize($links));
+      if(isset($_REQUEST['record_label_link'])) {
+        update_post_meta($post_id, 'record_label_links', serialize($links));
+      }
 
       // Save release type
       if(isset($_REQUEST['record_label_release_type'])) {
